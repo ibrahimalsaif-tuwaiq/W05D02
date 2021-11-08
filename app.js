@@ -1,4 +1,3 @@
-const { json } = require("express");
 const express = require("express");
 const fs = require("fs");
 
@@ -6,9 +5,6 @@ const app = express();
 const port = 5000;
 
 app.use(express.json());
-
-// // ID counter
-// let idCounter = movies.length;
 
 // Write to the file
 const writeToFile = (movies) => {
@@ -21,7 +17,7 @@ const writeToFile = (movies) => {
 
 // Get all movies & get all movies with ID query
 app.get("/movies", (req, res) => {
-  fs.readFile("./data.json", function (err, data) {
+  fs.readFile("./data.json", (err, data) => {
     const id = req.query.id;
 
     const movies = JSON.parse(data.toString());
@@ -44,7 +40,7 @@ app.get("/movies", (req, res) => {
 
 // Get movies with ID params
 app.get("/movies/:id/view", (req, res) => {
-  fs.readFile("./data.json", function (err, data) {
+  fs.readFile("./data.json", (err, data) => {
     const movies = JSON.parse(data.toString());
 
     const movie = movies.find(
@@ -61,7 +57,7 @@ app.get("/movies/:id/view", (req, res) => {
 
 // Get favourite movies
 app.get("/movies/fav", (req, res) => {
-  fs.readFile("./data.json", function (err, data) {
+  fs.readFile("./data.json", (err, data) => {
     const movies = JSON.parse(data.toString());
 
     const favMovies = movies.filter(
@@ -79,7 +75,7 @@ app.get("/movies/fav", (req, res) => {
 // POST //
 
 app.post("/movies", (req, res) => {
-  fs.readFile("./data.json", function (err, data) {
+  fs.readFile("./data.json", (err, data) => {
     const movies = JSON.parse(data.toString());
 
     movies.push({
@@ -100,7 +96,7 @@ app.post("/movies", (req, res) => {
 
 // Update movie name
 app.put("/movies/:id/update_movie", (req, res) => {
-  fs.readFile("./data.json", function (err, data) {
+  fs.readFile("./data.json", (err, data) => {
     const movies = JSON.parse(data.toString());
 
     movies.forEach((todo) => {
@@ -116,7 +112,7 @@ app.put("/movies/:id/update_movie", (req, res) => {
 
 // Update movie isFav to true
 app.put("/movies/:id/add_to_fav", (req, res) => {
-  fs.readFile("./data.json", function (err, data) {
+  fs.readFile("./data.json", (err, data) => {
     const movies = JSON.parse(data.toString());
 
     movies.forEach((movie) => {
@@ -134,7 +130,7 @@ app.put("/movies/:id/add_to_fav", (req, res) => {
 
 // Update movie isFav to false
 app.put("/movies/:id/delete_from_fav", (req, res) => {
-  fs.readFile("./data.json", function (err, data) {
+  fs.readFile("./data.json", (err, data) => {
     const movies = JSON.parse(data.toString());
 
     movies.forEach((movie) => {
@@ -154,7 +150,7 @@ app.put("/movies/:id/delete_from_fav", (req, res) => {
 
 // Delete movie with ID params
 app.delete("/movies/:id", (req, res) => {
-  fs.readFile("./data.json", function (err, data) {
+  fs.readFile("./data.json", (err, data) => {
     const movies = JSON.parse(data.toString());
 
     movies.forEach((movie) => {
@@ -170,4 +166,6 @@ app.delete("/movies/:id", (req, res) => {
   });
 });
 
-app.listen(port);
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
